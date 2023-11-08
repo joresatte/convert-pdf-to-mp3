@@ -3,10 +3,7 @@ import comtypes
 import shutil
 from pathlib import Path
 from comtypes.client import CreateObject
-curent_dir= os.chdir(r'IFAS TRABAJO SOCIAL')
 
-arr = os.listdir(r'C:\Users\jores.atte\Downloads\Proyectos personales\convert-pdf-to-mp3\IFAS TRABAJO SOCIAL')
-path = Path(r'C:\Users\jores.atte\Downloads\Proyectos personales\convert-pdf-to-mp3\docx_files')
 wdFormatPDF = 17
 
 def convertFile(file):
@@ -19,16 +16,33 @@ def convertFile(file):
     word.Quit()
 
 
-def convert_file_to_PDF():
-    if arr is not None:
-        for file in arr:
-            if file.endswith(".doc") or file.endswith(".docx"):
-                convertFile(file)
-    return arr
+def convert_file_to_PDF(path_string):
+    pdf_list=[]
+    if path_string !='':
+        for file in  os.listdir(path_string):
+            if (file).endswith(".doc") or (file).endswith(".docx"):
+                convertFile(os.path.isfile(file))
+                pdf_list.append(os.path.abspath(os.path.join(file)))
+            if (file).endswith('.pdf'):
+                pdf_list.append((file)) 
+    return pdf_list
 
-def move_doc_file(files_list):
+def move_doc_file(files_list, path):
     for file in files_list:
         if file.endswith(".doc") or file.endswith(".docx"):
-            shutil.move(os.path.abspath(os.path.join(os.path(file))), path)
-
-    return 'Successfully'
+            shutil.move(os.path.abspath(os.path.join(file)), path)
+            return 'Successfully'
+        if file.endswith('.pdf'):
+            return 'Only Pdf files'
+        else:
+            return 'Nothing to return'
+        
+def move_mp3_file_path(path_string, mp3_dir):
+    if path_string !='':
+        for file in  os.listdir(path_string):
+            if (file).endswith('.mp3'):
+                shutil.move((file), mp3_dir)
+                return 'Mp3 file moved'
+            else:
+                return 'No mp3 file'
+    

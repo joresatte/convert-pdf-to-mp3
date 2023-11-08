@@ -1,4 +1,3 @@
-from logging import raiseExceptions
 import pyttsx3
 # from gtts import gTTS
 import os , glob, PyPDF2, shutil

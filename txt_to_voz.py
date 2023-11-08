@@ -1,32 +1,35 @@
 import get_list_path, read_pdf_files
-import app
+import app, os
+from pathlib import Path
+current_dir= os.getcwd()
+path = Path(r'C:\Users\jores.atte\Downloads\Proyectos personales\convert-pdf-to-mp3\docx_files')
+path_string = Path(r'C:\Users\jores.atte\Downloads\Proyectos personales\convert-pdf-to-mp3\IFAS TRABAJO SOCIAL')
+mp3_dir= Path(r'C:\Users\jores.atte\Downloads\Proyectos personales\convert-pdf-to-mp3\mp3')
+path_deleted_list = os.listdir(r'C:\Users\jores.atte\Downloads\Proyectos personales\convert-pdf-to-mp3\moved_pdf')
+path_mv= Path(r'C:\Users\jores.atte\Downloads\Proyectos personales\convert-pdf-to-mp3\moved_pdf')
 
-
-    
 def get_MP3():
-    list_to_read= get_list_path.convert_file_to_PDF()
-    print(list_to_read)
-    pdf_list_file_path= get_list_path.move_doc_file(list_to_read)
-    print(pdf_list_file_path)
+    moved_mp3_file= get_list_path.move_mp3_file_path(path_string, mp3_dir)
+    print(moved_mp3_file)
+    list_to_read= get_list_path.convert_file_to_PDF(path_string)
+    # print('list to convert to pdf:', list_to_read)
+    pdf_list_file_path= get_list_path.move_doc_file(list_to_read, path)
+    # print('file path moved', pdf_list_file_path)
     if pdf_list_file_path == 'Successfully':
-        read_pdf_files.read_files()
-    return 'very good'
-        
-
-# def convert_to_MP3(string_output):
-#     string_output= get_string()
-#     # Initialize the Pyttsx3 engine
-#     engine = pyttsx3.init()
-#     newVoiceRate = 145
-#     voices = engine.getProperty('voices') 
-#     engine.setProperty('voice', 'es-es')
-#     engine.setProperty('voice', voices[0].id)
-#     engine.setProperty('rate',newVoiceRate)
-#     engine.save_to_file(string_output, 'speech.mp3')
-#     # Wait until above command is not finished.
-#     engine.runAndWait()
-
+        get_string= read_pdf_files.read_files(list_to_read, path_deleted_list)
+        if get_string== 'Done':
+            return 'very good'
+    if pdf_list_file_path== 'Only Pdf files':
+        get_string= read_pdf_files.read_files(list_to_read, path_deleted_list)
+        if get_string== 'Done':
+            return 'very good'
+    
+def moved_converted_file(check_string):
+    if get_MP3()== check_string:
+        ended_process= read_pdf_files.move_file_path(path_string, path_mv)
+    return ended_process
 
 string_to_covert= get_MP3()
+end_process= moved_converted_file('very good')
 print(string_to_covert)
-# convert_to_MP3(string_to_covert)
+print(end_process)
