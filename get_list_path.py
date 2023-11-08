@@ -2,6 +2,7 @@ import os
 import comtypes
 import shutil
 from pathlib import Path
+from comtypes.client import CreateObject
 curent_dir= os.chdir(r'IFAS TRABAJO SOCIAL')
 
 arr = os.listdir(r'C:\Users\jores.atte\Downloads\Proyectos personales\convert-pdf-to-mp3\IFAS TRABAJO SOCIAL')
@@ -28,4 +29,6 @@ def convert_file_to_PDF():
 def move_doc_file(files_list):
     for file in files_list:
         if file.endswith(".doc") or file.endswith(".docx"):
-            shutil.move(file, path)
+            shutil.move(os.path.abspath(os.path.join(os.path(file))), path)
+
+    return 'Successfully'
