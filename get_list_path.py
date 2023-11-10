@@ -10,7 +10,7 @@ def convertFile(file):
     in_file = os.path.abspath(file)
     out_file = os.path.abspath(file.replace(".docx", ".pdf").replace(".doc", ".pdf"))
     word = comtypes.client.CreateObject('Word.Application')
-    doc = word.Documents.Add(in_file)
+    doc = word.Documents.Open(in_file)
     doc.SaveAs(out_file, FileFormat=wdFormatPDF)
     doc.Close()
     word.Quit()
@@ -19,12 +19,17 @@ def convertFile(file):
 def convert_file_to_PDF(path_string):
     pdf_list=[]
     if path_string !='':
-        for file in  os.listdir(path_string):
-            if (file).endswith(".doc") or (file).endswith(".docx"):
-                convertFile(os.path.isfile(file))
-                pdf_list.append(os.path.abspath(os.path.join(file)))
-            if (file).endswith('.pdf'):
-                pdf_list.append((file)) 
+        list_dir_= os.listdir(path_string)
+        file= list_dir_[0]
+        if file.endswith(".mp3"):
+            mp3_dir= mp3_dir_path(path_string)
+            shutil.move(os.path.abspath(os.path.join(file)), mp3_dir)
+            return 'Successfully moved mp3 file'
+        if (file).endswith(".doc") or (file).endswith(".docx"):
+            convertFile(file)
+            pdf_list.append(os.path.abspath(os.path.join(file)))
+        if (file).endswith('.pdf'):
+            pdf_list.append(os.path.abspath(os.path.join(file))) 
     return pdf_list
 
 def move_doc_file(files_list, path):
@@ -37,12 +42,7 @@ def move_doc_file(files_list, path):
         else:
             return 'Nothing to return'
         
-def move_mp3_file_path(path_string, mp3_dir):
-    if path_string !='':
-        for file in  os.listdir(path_string):
-            if (file).endswith('.mp3'):
-                shutil.move((file), mp3_dir)
-                return 'Mp3 file moved'
-            else:
-                return 'No mp3 file'
+def mp3_dir_path(mp3_dir):
+    if mp3_dir !='':
+        return mp3_dir
     
