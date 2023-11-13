@@ -15,14 +15,13 @@ def read_files(arr, path_moved_pdf):
         for file in read_file:
             pdfReader = PyPDF2.PdfReader(file)
             count = len(pdfReader.pages)
-            if count<300:
-                for i in range(count):
+            for i in range(count):
                     page = pdfReader.pages[i]
-                    output.append(page.extract_text())
+                    output.append(page.extract_text())          
         seperator = ','
         newoutput = seperator.join(output).replace('\n', '')
         newoutput.strip()
-        print(newoutput)
+        print(len(newoutput))
         return newoutput
     except OSError as e:
         print("file Error: {}".format(e))
@@ -66,3 +65,45 @@ def convert_string(arr, string):
 def move_mp3_to_dir(mp3_file, mp3_dir_path):
     shutil.move(mp3_file, mp3_dir_path)
     return 'very good'
+
+def convert_first_string(arr, first_string):
+    try:
+        if first_string!='':
+            # Initialize the Pyttsx3 engine
+            engine = pyttsx3.init()
+            newVoiceRate = 145
+            voices = engine.getProperty('voices') 
+            engine.setProperty('voice', 'es-es')
+            engine.setProperty('voice', voices[0].id)
+            engine.setProperty('rate',newVoiceRate)
+            #engine.say(newoutput)
+            name, ext= os.path.splitext(arr[0])
+            name= name
+            engine.save_to_file(first_string, name+'_1'+'.mp3')
+            # Wait until above command is not finished.
+            engine.runAndWait()
+            engine.stop()
+            return 'first_string converted to mp3'
+    except:
+        raise Exception("Sorry, can't convert file")
+    
+def convert_second_string(arr, second_string):
+    try:
+        if second_string!='':
+            # Initialize the Pyttsx3 engine
+            engine = pyttsx3.init()
+            newVoiceRate = 145
+            voices = engine.getProperty('voices') 
+            engine.setProperty('voice', 'es-es')
+            engine.setProperty('voice', voices[0].id)
+            engine.setProperty('rate',newVoiceRate)
+            #engine.say(newoutput)
+            name, ext= os.path.splitext(arr[0])
+            name= name
+            engine.save_to_file(second_string, name+'_2'+'.mp3')
+            # Wait until above command is not finished.
+            engine.runAndWait()
+            engine.stop()
+            return 'second_string converted to mp3'
+    except:
+        raise Exception("Sorry, can't convert file")

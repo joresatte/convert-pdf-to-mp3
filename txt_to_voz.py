@@ -18,14 +18,28 @@ def get_MP3():
     # print('file path moved', pdf_list_file_path)
     if pdf_list_file_path == 'Successfully':
         get_string= read_pdf_files.read_files(list_to_read, path_mv)
-        if get_string!= '':
+        if get_string!= '' and len(get_string)<530421:
             converted= read_pdf_files.convert_string(list_to_read, get_string)
             return converted
+        else:
+            x = lambda a, b: a / b
+            firt_string= get_string[:int(x(len(get_string), 2))]
+            second_string= get_string[int(x(len(get_string), 2)):]
+            converted_1= read_pdf_files.convert_first_string(list_to_read, firt_string)
+            converted_2= read_pdf_files.convert_second_string(list_to_read, second_string)
+            return converted_1, converted_2
     elif pdf_list_file_path== 'Only Pdf files':
         get_string= read_pdf_files.read_files(list_to_read, path_mv)
-        if get_string!= '':
+        if get_string!= '' and len(get_string)<180000:
             converted= read_pdf_files.convert_string(list_to_read, get_string)
             return converted
+        else:
+            x = lambda a, b: a / b
+            firt_string= get_string[:int(x(len(get_string), 2))]
+            second_string= get_string[int(x(len(get_string), 2)):]
+            converted_1= read_pdf_files.convert_first_string(list_to_read, firt_string)
+            converted_2= read_pdf_files.convert_second_string(list_to_read, second_string)
+            return converted_1, converted_2
         
 # def moving_mp3(mp3_file):
 #     if mp3_file is not None:
@@ -34,11 +48,11 @@ def get_MP3():
 #         return moving_mp3
     
     
-def moved_converted_file(check_string):
-    if get_MP3()== check_string:
-        ended_process= read_pdf_files.move_file_path(path_string, path_string, path_mv)
-    return ended_process
-
-mp3_file= get_MP3()
-end_process= moved_converted_file('file converted to mp3')
-print(end_process)
+# def moved_converted_file(check_string):
+#     if get_MP3()== check_string:
+#         ended_process= read_pdf_files.move_file_path(path_string, path_string, path_mv)
+#     return ended_process
+if __name__ == '__main__':
+    mp3_file= get_MP3()
+# end_process= moved_converted_file('file converted to mp3')
+# print(end_process)
